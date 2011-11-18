@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  year: 2011-11-18
+  goehlert_score: 9.99
+  reg_season_win: 9.99
+  playoff_win: 9.99
+  team: 
+
+two:
+  year: 2011-11-18
+  goehlert_score: 9.99
+  reg_season_win: 9.99
+  playoff_win: 9.99
+  team: 
