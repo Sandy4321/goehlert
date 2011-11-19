@@ -5,5 +5,5 @@ class Team < ActiveRecord::Base
                     :uniqueness => { :case_sensitive => false }
   validates :location, :presence => true
   
-  has_many :stats
+  has_many :stats, :order => 'year DESC'
 end

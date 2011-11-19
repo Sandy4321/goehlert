@@ -1,7 +1,8 @@
 class Stat < ActiveRecord::Base
-  validates :team_id, :presence => true
-  validates :year, :presence => true
-            # need to validate only one year per team_id 
+  validates :year,  :presence => true
+  validates :team_id, :presence => true,
+                      :uniqueness => {  :scope => :year,
+                                        :message => 'can only have one set of stats per year'}
   validates :goehlert_score, :presence => true
   validates :reg_season_win, :presence => true
   validates :playoff_win, :presence => true
