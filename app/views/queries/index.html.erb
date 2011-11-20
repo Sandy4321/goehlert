@@ -1,0 +1,18 @@
+<h1>Queries</h1>
+<%= form_tag('/queries', :method => 'get') do %>
+	<p>
+		Display the top <%= text_field_tag :teams_amt %> teams 
+		based on <%= select_tag(:stat_options, options_for_select([['Goehlert Score', 'goehlert_score']])) %> 
+		for years <%= select_year 2005, :start_year => 2005, :end_year => 2011 %>
+		through <%= select_year Date.today, :start_year => 2005, :end_year => 2011 %>
+	</p>
+	<div class="actions">
+		<%= submit_tag "Submit" %>
+	</div>
+<% end %>
+
+<div id="results">
+	<% if !@response.nil? %>
+		<p><%= @response %></p>
+	<% end %>
+</div>

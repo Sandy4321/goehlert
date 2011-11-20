@@ -1,0 +1,36 @@
+/* ================================================== */
+/* Global
+/* ================================================== */
+@mixin rounded($radius: 5px) 
+{
+	-moz-border-radius: $radius;
+	-webkit-border-radius: $radius;
+	border-radius: $radius;
+}
+
+@mixin shadow($horizontal: 0, $vertical: 0, $blur: 5px, $color: rgba(0,0,0,0.5)) 
+{
+	-moz-box-shadow: $horizontal $vertical $blur $color;
+	-webkit-box-shadow: $horizontal $vertical $blur $color;
+	box-shadow: $horizontal $vertical $blur $color;
+}
+
+@mixin transition($property: all, $speed: 0.2s, $motion: linear) 
+{
+	-moz-transition: $property $speed $motion;
+	-o-transition: $property $speed $motion;
+	-ms-transition: $property $speed $motion;
+	-webkit-transition: $property $speed $motion;
+	transition: $property $speed $motion;
+}
+
+$georgia-stack: Georgia, Palatino, "Palatino Linotype", Times, "Times New Roman", serif;
+$franklin-stack: "Franklin Gothic Medium", "Arial Narrow Bold", Arial, sans-serif; 
+
+body
+{
+	background: #333;
+	color: #999;
+	font-family: $georgia-stack;
+	padding: 30px;
+}

@@ -1,7 +1,8 @@
 GoehlertSports::Application.routes.draw do
-  get "home/index"
+  resources :teams, :stats
   
   match '/teams', :to => 'teams#index'
+  match '/queries', :to => 'queries#index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
