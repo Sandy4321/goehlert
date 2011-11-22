@@ -1,6 +1,6 @@
 <h1>Teams</h1>
 <ul>
 	<% @teams_alpha.each do |team| %>
-		<li><%= capitalize_first(team.location) %> <%= capitalize_first(team.name) %> (<%= team.abbr %>)</li>
+		<li><%= cap_first(team.location) %> <%= cap_first(team.name) %> (<%= team.abbr %>)</li>
 	<% end %>
 </ul>

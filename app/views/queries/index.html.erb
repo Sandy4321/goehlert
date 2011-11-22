@@ -11,8 +11,29 @@
 	</div>
 <% end %>
 
+<!--
 <div id="results">
-	<% if !@response.nil? %>
-		<p><%= @response %></p>
+	<% if !@result.nil? %>
+		<p><%= @result %></p>
+	<% end %>
+</div>-->
+
+<div class="top_ten goehlert">
+	<% if !@top_goehlert_2011.nil? and @top_goehlert_2011.count >= 10 %>
+	<h3>Top Ten Goehlert Score MLB Teams 2011</h3>
+	<table>
+		<tr>
+			<th>Team</th>
+			<th>Goehlert Score</th>
+		</tr>
+		<% @top_goehlert_2011.each do |team| %>
+			<tr>
+				<td><%= cap_first(team.location) %> <%= cap_first(team.name) %></td>
+				<td><%= team.stats.goehlert_score %></td>
+			</tr>
+		<% end %>
+	</table>
 	<% end %>
 </div>
+
+<%= debug @request %>
