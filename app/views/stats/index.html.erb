@@ -1,0 +1,66 @@
+<h1>Stats</h1>
+<div class="query">
+	<%= form_tag('/stats', :method => 'get') do %>
+		<p>
+			Display the top <%= text_field_tag :teams_amt %> teams 
+			based on <%= select_tag(:stat_options, options_for_select([['Goehlert Score', 'goehlert_score']])) %> 
+			for years <%= select_tag(:start_year, options_for_select(2005..2011)) %>
+			through <%= select_tag(:end_year, options_for_select((2005..2011), '2011')) %>
+		</p>
+		<div class="actions">
+			<%= submit_tag "Submit" %>
+		</div>
+	<% end %>
+</div>
+
+<div class="results">
+	<h2>Results</h2>
+	<% if response_success? %>
+		<% if @results.count > 0 %>
+			<table>
+				<tr>
+					<th>Team</th>
+					<th>Stat</th>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+				</tr>
+			</table>
+		<% else %>
+			<p>No results.</p>
+		<% end %>
+	<% else %>
+		<p class="error">Error! Response status: <%= response.status %></p>
+	<% end %>
+</div>
+
+<div id="debug">
+	request.path_parameters
+	<%= debug request.path_parameters %>
+	<br/>
+	request.query_parameters
+	<%= debug request.query_parameters %>
+	<br/>
+	request.request_parameters
+	<%= debug request.request_parameters %>
+</div>
+
+<!--
+<div class="top_ten goehlert">
+	<% if !@top_goehlert_2011.nil? %>
+	<h3>Top Goehlert Score MLB Teams 2011</h3>
+	<table>
+		<tr>
+			<th>Team</th>
+			<th>Goehlert Score</th>
+		</tr>
+		<% @top_goehlert_2011.each do |stat| %>
+			<tr>
+				<td><%= cap_first(stat.team.location) %> <%= cap_first(stat.team.name) %></td>
+				<td><%= stat.goehlert_score %></td>
+			</tr>
+		<% end %>
+	</table>
+	<% end %>
+</div>-->
