@@ -2,8 +2,16 @@
 <div class="query">
 	<%= form_tag('/stats', :method => 'get') do %>
 		<p>
-			Display the top <%= text_field_tag :teams_amt %> teams 
-			based on <%= select_tag(:stat_options, options_for_select([['Goehlert Score', 'goehlert_score']])) %> 
+			Display the top <%= text_field_tag :result_count %> teams 
+			based on 
+			<%= 
+			select_tag(:measured_stat, options_for_select(
+			[
+				['Goehlert Score', 'goehlert_score'], 
+				['Reg Season Win', 'reg_season_win'],
+				['Playoff Win', 'playoff_win']
+			])) 
+			%> 
 			for years <%= select_tag(:start_year, options_for_select(2005..2011)) %>
 			through <%= select_tag(:end_year, options_for_select((2005..2011), '2011')) %>
 		</p>
@@ -20,11 +28,24 @@
 			<table>
 				<tr>
 					<th>Team</th>
-					<th>Stat</th>
+					<th>Year</th>
+					<% displayed_stats.each do |stat_name| %>
+						<th><%= cap_first(stat_name.humanize) %></th>
+					<% end %>					
 				</tr>
 				<tr>
-					<td></td>
-					<td></td>
+					<% @results.each do |result| %>
+					<tr>
+						<td>
+							<%= cap_first(Team.find(result.team_id).name) %>
+							(<%= Team.find(result.team_id).abbr %>)
+						</td>
+						<td><%= result.year %></td>
+						<td><%= result.goehlert_score %></td>
+						<td><%= result.reg_season_win %></td>
+						<td><%= result.playoff_win %></td>
+					</tr>
+					<% end %>
 				</tr>
 			</table>
 		<% else %>
@@ -44,6 +65,12 @@
 	<br/>
 	request.request_parameters
 	<%= debug request.request_parameters %>
+	<br/>
+	response.body
+	<%= debug response.body %>
+	<br/>
+	@results
+	<%= debug @results %>
 </div>
 
 <!--

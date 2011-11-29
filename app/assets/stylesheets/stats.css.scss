@@ -6,28 +6,28 @@
 	margin-top: 30px;
 }
 
+h3
+{
+	margin-bottom: 8px;
+}
+
+table
+{
+	th
+	{
+		text-align: left;
+		text-decoration: underline;
+		width: 200px;
+		padding-bottom: 5px;
+	}
+}
+
 .top_ten
 {
 	width: 400px;
 	margin-top: 30px;
 	border: 1px solid;
-	padding: 10px;
-	
-	h3
-	{
-		margin-bottom: 8px;
-	}
-	
-	table
-	{
-		th
-		{
-			text-align: left;
-			text-decoration: underline;
-			width: 200px;
-			padding-bottom: 5px;
-		}
-	}
+	padding: 10px;	
 }
 
 #debug
