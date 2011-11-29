@@ -2,7 +2,7 @@
 <div class="query">
 	<%= form_tag('/stats', :method => 'get') do %>
 		<p>
-			Display the top <%= text_field_tag :result_count %> teams 
+			Display the top <%= text_field_tag :result_count, params[:result_count] %> teams 
 			based on 
 			<%= 
 			select_tag(:measured_stat, options_for_select(
@@ -10,10 +10,10 @@
 				['Goehlert Score', 'goehlert_score'], 
 				['Reg Season Win', 'reg_season_win'],
 				['Playoff Win', 'playoff_win']
-			])) 
+			], params[:measured_stat])) 
 			%> 
-			for years <%= select_tag(:start_year, options_for_select(2005..2011)) %>
-			through <%= select_tag(:end_year, options_for_select((2005..2011), '2011')) %>
+			for years <%= select_tag(:start_year, options_for_select((2005..2011), params[:start_year].to_s)) %>
+			through <%= select_tag(:end_year, options_for_select((2005..2011), params[:end_year].to_s)) %>
 		</p>
 		<div class="actions">
 			<%= submit_tag "Submit" %>
