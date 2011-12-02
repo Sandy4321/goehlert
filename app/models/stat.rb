@@ -9,3 +9,19 @@ class Stat < ActiveRecord::Base
   
   belongs_to :team
 end
+
+######################
+# STAT COLUMNS NEEDED
+# year
+# wins
+# losses
+# reg_season_rec
+# postseason_rec?
+# playoff_app
+# div_champ
+# league_champ
+# champ
+# g_score
+# num_seasons
+# g_pts_per_season
+# avg_g_score
