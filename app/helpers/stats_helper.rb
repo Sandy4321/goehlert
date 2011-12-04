@@ -4,6 +4,6 @@ module StatsHelper
   end
   
   def displayed_stats
-  	['goehlert_score', 'reg_season_win', 'playoff_win']
+  	['g_score', 'reg_season_rec', 'playoff_app']
   end
 end

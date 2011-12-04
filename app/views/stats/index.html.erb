@@ -7,9 +7,9 @@
 			<%= 
 			select_tag(:measured_stat, options_for_select(
 			[
-				['Goehlert Score', 'goehlert_score'], 
-				['Reg Season Win', 'reg_season_win'],
-				['Playoff Win', 'playoff_win']
+				['Goehlert Score', 'g_score'], 
+				['Regular Season Record', 'reg_season_rec'],
+				['Playoff Appearances', 'playoff_app']
 			], params[:measured_stat])) 
 			%> 
 			for years <%= select_tag(:start_year, options_for_select((2005..2011), params[:start_year].to_s)) %>
@@ -41,9 +41,9 @@
 							(<%= Team.find(result.team_id).abbr %>)
 						</td>
 						<td><%= result.year %></td>
-						<td><%= result.goehlert_score %></td>
-						<td><%= result.reg_season_win %></td>
-						<td><%= result.playoff_win %></td>
+						<td><%= result.g_score %></td>
+						<td><%= result.reg_season_rec %></td>
+						<td><%= result.playoff_app %></td>
 					</tr>
 					<% end %>
 				</tr>

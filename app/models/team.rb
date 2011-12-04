@@ -1,11 +1,13 @@
 class Team < ActiveRecord::Base
   validates :sport, :presence => true
   validates :league, :presence => true
+  validates :division, :presence => true
   validates :name, :presence => true,
                    :uniqueness => { :case_sensitive => false }
   validates :abbr, :presence => true,
                    :uniqueness => { :case_sensitive => false }
-  validates :location, :presence => true
+  validates :location, :presence => true,
+  										 :format => { :with => /[a-zA-Z]/ }
   
   has_many :stats, :order => 'year DESC'
 end
@@ -14,10 +16,8 @@ end
 # TEAM COLUMNS NEEDED
 # sport
 # name x
-# prior_name?
 # abbr x
 # location x
-# prior_location?
 # league
-# division?
+# division
 # stats (foreign key)
