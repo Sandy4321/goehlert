@@ -28,10 +28,14 @@ class Stat < ActiveRecord::Base
   									:inclusion => { :in => [0, 1] }
   validates :g_score, :presence => true,
   										:numericality => true
-  validates :as_name, :allow_blank => true,
-  									  :format => { :with => /[a-zA-Z]/ }
-  validates :at_location, :allow_blank => true,
-  									  		:format => { :with => /[a-zA-Z]/ }
+  validates :name, :format => { :with => /[a-zA-Z]/ },
+  								 :allow_blank => true
+  validates :location, :format => { :with => /[a-zA-Z]/ },
+  										 :allow_blank => true
+  validates :league, :format => { :with => /[a-zA-Z]/ },
+  									 :allow_blank => true
+  validates :division, :format => { :with => /[a-zA-Z]/ },
+  									 :allow_blank => true
   
   belongs_to :team
 end

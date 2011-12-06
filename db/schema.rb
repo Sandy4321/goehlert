@@ -11,12 +11,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111204131750) do
+ActiveRecord::Schema.define(:version => 20111204192701) do
 
   create_table "stats", :force => true do |t|
     t.date     "year"
-    t.decimal  "g_score"
-    t.decimal  "reg_season_rec"
+    t.decimal  "g_score",        :precision => 10, :scale => 0
+    t.decimal  "reg_season_rec", :precision => 10, :scale => 0
     t.integer  "team_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -27,8 +27,11 @@ ActiveRecord::Schema.define(:version => 20111204131750) do
     t.integer  "div_champ"
     t.integer  "league_champ"
     t.integer  "champ"
-    t.string   "as_name"
-    t.text     "at_location"
+    t.string   "name"
+    t.string   "location"
+    t.string   "league"
+    t.string   "division"
+    t.string   "notes"
   end
 
   add_index "stats", ["team_id"], :name => "index_stats_on_team_id"
@@ -36,7 +39,7 @@ ActiveRecord::Schema.define(:version => 20111204131750) do
   create_table "teams", :force => true do |t|
     t.string   "name"
     t.string   "abbr"
-    t.text     "location"
+    t.string   "location"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "sport"
