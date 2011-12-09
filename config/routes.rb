@@ -1,8 +1,7 @@
 GoehlertSports::Application.routes.draw do
-  resources :teams, :stats
-  
-  match '/teams', :to => 'teams#index'
-  match '/stats', :to => 'stats#index'
+  match '/teams', 		:to => 'teams#index'
+  match '/stats', 		:to => 'stats#compiled'
+  match '/stats/raw', :to => 'stats#raw'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

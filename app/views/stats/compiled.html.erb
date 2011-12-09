@@ -1,0 +1,95 @@
+<h1>Stats: Compiled</h1>
+<div class="query">
+	<%= form_tag('/stats', :method => 'get') do %>
+		<p>
+			Display the top <%= text_field_tag :result_count, params[:result_count], :class => "short" %> teams 
+			based on 
+			<%= 
+			select_tag(:measured_stat, options_for_select(
+			[
+				['Goehlert Score', 'g_score'], 
+				['Regular Season Record', 'reg_season_rec'],
+				['Wins', 'wins'],
+				['Losses', 'losses'],
+				['Championships', 'champ'],
+				['League Championships', 'league_champ'],
+				['Division Championships', 'div_champ'],
+				['Playoff Appearances', 'playoff_app'],
+				['Wildcard', 'wildcard']
+			], params[:measured_stat])) 
+			%> 
+			for years <%= select_tag(:start_year, options_for_select((1871..2011), params[:start_year].to_s)) %>
+			through <%= select_tag(:end_year, options_for_select((1871..2011), params[:end_year].to_s)) %>
+		</p>
+		<div class="actions">
+			<%= submit_tag "Submit" %>
+		</div>
+	<% end %>
+</div>
+
+<div class="results">
+	<h2>Results</h2>
+	<% if response_success? %>
+		<% if !@compiled_results.nil? %>
+			<% if @compiled_results.count > 0 %>
+				<table>
+					<tr>
+						<th>Team</th>
+						<th>Year</th>
+						<th>Goehlert Score</th>
+						<th>Season Record</th>
+						<th>Wins</th>
+						<th>Losses</th>
+						<th>Championships</th>
+						<th>League Champ</th>
+						<th>Division Champ</th>
+						<th>Playoff App</th>
+						<th>Wildcard</th>
+					</tr>
+					<tr>
+						<% @compiled_results.each do |result| %>
+						<tr>
+							<td>
+								<%= cap_first(Team.find(result.team_id).name) %>
+								(<%= Team.find(result.team_id).abbr %>)
+							</td>
+							<td><%= result.year %></td>
+							<td><%= result.g_score %></td>
+							<td><%= result.reg_season_rec %></td>
+							<td><%= result.wins %></td>
+							<td><%= result.losses %></td>
+							<td><%= result.champ %></td>
+							<td><%= result.league_champ %></td>
+							<td><%= result.div_champ %></td>
+							<td><%= result.playoff_app %></td>
+							<td><%= result.wildcard %></td>
+						</tr>
+						<% end %>
+					</tr>
+				</table>
+			<% else %>
+				<p>No results.</p>
+			<% end %>
+		<% end %>
+	<% else %>
+		<p class="error">Error! Response status: <%= response.status %></p>
+	<% end %>
+</div>
+
+<div id="debug">
+	measured_stat
+	<%= debug @measured_stat %>
+	<br/>
+	request.path_parameters
+	<%= debug request.path_parameters %>
+	<br/>
+	request.query_parameters
+	<%= debug request.query_parameters %>
+	<br/>
+	request.request_parameters
+	<%= debug request.request_parameters %>
+	<br/>
+	response.code
+	<%= debug response.code %>
+	<br/>
+</div>

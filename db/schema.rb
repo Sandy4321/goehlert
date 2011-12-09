@@ -15,8 +15,8 @@ ActiveRecord::Schema.define(:version => 20111204192701) do
 
   create_table "stats", :force => true do |t|
     t.date     "year"
-    t.decimal  "g_score",        :precision => 10, :scale => 0
-    t.decimal  "reg_season_rec", :precision => 10, :scale => 0
+    t.decimal  "g_score",        :precision => 10, :scale => 2
+    t.decimal  "reg_season_rec", :precision => 10, :scale => 3
     t.integer  "team_id"
     t.datetime "created_at"
     t.datetime "updated_at"

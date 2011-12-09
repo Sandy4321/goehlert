@@ -1,6 +1,5 @@
 class Stat < ActiveRecord::Base
-  validates :year, :presence => true, 
-  								 :numericality => { :only_integer => true }
+  validates :year, :presence => true 
   validates :team_id, :presence => true,
                       :uniqueness => { :scope => :year,
                                        :message => 'can only have one set of stats per year' }
@@ -36,35 +35,11 @@ class Stat < ActiveRecord::Base
   									 :allow_blank => true
   validates :division, :format => { :with => /[a-zA-Z]/ },
   									 :allow_blank => true
-  
   belongs_to :team
+  
+  def self.compiled_stats(measured_stat, params)
+  	date_range = params[:start_year]..params[:end_year]
+  	
+  	Stat.where(:year => params[:start_year]..params[:end_year]).reorder(measured_stat + ' DESC').limit(params[:result_count])
+  end
 end
-
-######################
-# STAT COLUMNS NEEDED
-# year x
-# wins (integer)
-# losses (integer)
-# reg_season_rec --> rename from reg_season_win
-# wildcard (integer, 1/0)
-# playoff_app (integer) --> remove playoff_win
-# div_champ (integer)
-# league_champ (integer) 
-# champ (integer)
-# g_score --> rename from goehlert_score
-# num_seasons (integer)
-# avg_g_score (decimal)
-# as_name (string)
-
-
-
-
-
-
-
-
-
-
-
-
-# at_location (text)

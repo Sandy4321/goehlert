@@ -1,15 +1,14 @@
-<h1>Stats</h1>
+<h1>Stats: Raw</h1>
 <div class="query">
-	<%= form_tag('/stats', :method => 'get') do %>
+	<%= form_tag('/stats/raw', :method => 'get') do %>
 		<p>
-			Display the top <%= text_field_tag :result_count, params[:result_count] %> teams 
+			Display the top <%= text_field_tag :result_count, params[:result_count], :class => "short" %> teams 
 			based on 
 			<%= 
 			select_tag(:measured_stat, options_for_select(
 			[
 				['Goehlert Score', 'g_score'], 
-				['Regular Season Record', 'reg_season_rec'],
-				['Playoff Appearances', 'playoff_app']
+				['Regular Season Record', 'reg_season_rec']
 			], params[:measured_stat])) 
 			%> 
 			for years <%= select_tag(:start_year, options_for_select((2005..2011), params[:start_year].to_s)) %>
@@ -24,17 +23,16 @@
 <div class="results">
 	<h2>Results</h2>
 	<% if response_success? %>
-		<% if @results.count > 0 %>
+		<% if @raw_results.count > 0 %>
 			<table>
 				<tr>
 					<th>Team</th>
 					<th>Year</th>
-					<% displayed_stats.each do |stat_name| %>
-						<th><%= cap_first(stat_name.humanize) %></th>
-					<% end %>					
+					<th>Goehlert Score</th>
+					<th>Regular Season Record</th>
 				</tr>
 				<tr>
-					<% @results.each do |result| %>
+					<% @raw_results.each do |result| %>
 					<tr>
 						<td>
 							<%= cap_first(Team.find(result.team_id).name) %>
@@ -43,7 +41,6 @@
 						<td><%= result.year %></td>
 						<td><%= result.g_score %></td>
 						<td><%= result.reg_season_rec %></td>
-						<td><%= result.playoff_app %></td>
 					</tr>
 					<% end %>
 				</tr>
@@ -57,6 +54,9 @@
 </div>
 
 <div id="debug">
+	measured_stat
+	<%= debug @measured_stat %>
+	<br/>
 	request.path_parameters
 	<%= debug request.path_parameters %>
 	<br/>
@@ -66,9 +66,7 @@
 	request.request_parameters
 	<%= debug request.request_parameters %>
 	<br/>
-	response.body
-	<%= debug response.body %>
+	response.code
+	<%= debug response.code %>
 	<br/>
-	@results
-	<% if @results %><%= debug @results %><% end %>
 </div>

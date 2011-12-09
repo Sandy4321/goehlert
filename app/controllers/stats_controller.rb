@@ -1,15 +1,27 @@
 class StatsController < ApplicationController
-	def index  	
+	def measured_stat
+		if !params[:measured_stat].nil? 
+			params[:measured_stat].to_s
+		else 
+			nil
+		end
+	end
+		
+	# raw stats
+	def raw  	
 		def result_count
 			params[:result_count].to_i
 		end 
 		
-		def measured_stat
-			stat = params[:measured_stat].to_s
-			"#{ stat } DESC" if !params[:measured_stat].nil? else ''
+		@measured_stat = measured_stat
+		@raw_results = Stat.where(:year => params[:start_year]..params[:end_year]).limit(result_count).reorder(measured_stat + ' DESC')
+	end
+	
+	# compiled stats
+	def compiled
+		stat = measured_stat()
+		if !stat.nil?
+			@compiled_results = Stat.compiled_stats(stat, params)
 		end
-		
-		@measured_stat = self.measured_stat
-		@results = Stat.where(:year => (params[:start_year])..(params[:end_year])).limit(result_count).reorder(measured_stat)
 	end
 end
