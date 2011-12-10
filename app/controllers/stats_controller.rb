@@ -20,6 +20,7 @@ class StatsController < ApplicationController
 	# compiled stats
 	def compiled
 		stat = measured_stat()
+		@team = Team.all
 		if !stat.nil?
 			@compiled_results = Stat.compiled_stats(stat, params)
 		end
