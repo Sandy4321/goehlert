@@ -31,8 +31,12 @@ $franklin-stack: "Franklin Gothic Medium", "Arial Narrow Bold", Arial, sans-seri
 
 body
 {
-	background: #333;
-	color: #999;
+	//background: #8B8B8B;
+	background: #555;
+	color: #bcbcbc;
+	text-shadow: #333 1px 1px 0px;
+	//text-shadow: #3D3D3D 1px 1px 0px;
+	//color: #999;
 	font-family: $georgia-stack;
 	padding: 30px;
 }
