@@ -69,16 +69,11 @@
 </div>
 
 <div id="debug">
-	request.path_parameters
-	<%= debug request.path_parameters %>
-	<br/>
 	request.query_parameters
 	<%= debug request.query_parameters %>
 	<br/>
-	request.request_parameters
-	<%= debug request.request_parameters %>
+	@compiled_results
 	<br/>
-	response.code
-	<%= debug response.code %>
-	<br/>
+	<%= debug @compiled_results.class %>
+	<%= debug @compiled_results %>
 </div>

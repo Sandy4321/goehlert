@@ -1,6 +1,6 @@
 module StatsHelper
   def response_success?
-    response.status === 200
+    response.status == 200
   end
   
   def result_count?

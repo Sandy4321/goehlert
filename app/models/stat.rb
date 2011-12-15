@@ -40,9 +40,12 @@ class Stat < ActiveRecord::Base
   def self.compiled_stats(measured_stat, params)
   	compiled_stats = []
   	stats_by_team = []
+ 
   	date_range = params[:start_year]..params[:end_year]
   	stats_pool = Stat.where(:year => date_range).to_a
   	team_ids = get_team_ids(stats_pool)
+  	
+  	# Create a hash for each team, push to stats_by_team array.
   	team_ids.each do |id|
   		team = 
   		{
@@ -58,6 +61,8 @@ class Stat < ActiveRecord::Base
   		}
   		stats_by_team.push(team)
   	end
+  	
+  	# Push each set of stats for a team id to that team's hash, into its raw stats array.
   	stats_pool.each do |stat|
 			stats_by_team.each do |team_stats|
 				if team_stats[:id] == stat.team_id
@@ -65,6 +70,8 @@ class Stat < ActiveRecord::Base
 				end
 			end
    	end
+   	
+   	# Create compiled stats hash for each team.
   	stats_by_team.each do |team|
   		team[:compiled_stats] = 
   		{
@@ -79,19 +86,29 @@ class Stat < ActiveRecord::Base
   			:playoff_app => 0,
   			:notes => ''
   		}
+  		
+  		# Add up the raw stats for each team into that team's compiled stats hash.
+  		compiled = team[:compiled_stats]
+  		
   		team[:raw_stats].each do |raw|
-  			compiled = team[:compiled_stats]
   			compiled[:g_score] += raw.g_score
-  			compiled[:reg_season_rec] += raw.reg_season_rec  		
   			compiled[:wins] += raw.wins	
   			compiled[:losses] += raw.losses	
   			compiled[:champ] += raw.champ	
   			compiled[:league_champ] += raw.league_champ	
   			compiled[:div_champ] += raw.div_champ	
   			compiled[:wildcard] += raw.wildcard	
-  			compiled[:notes] += raw.notes if !raw.notes.nil?
+  			compiled[:notes] += (" // " + raw.notes) if !raw.notes.nil?
   		end
+  		
+  		# Calculate overall season record based on compiled wins and losses.
+  		total_games = compiled[:wins].to_f + compiled[:losses].to_f
+  		compiled[:reg_season_rec] = (compiled[:wins].to_f / total_games).round(3)
   	end
+  	
+  	# Create a new compiled team hash with compiled stats and add each compiled team to the results array.
+  	# This feels redundant; initially I tried to just remove the raw stats from each team but was
+  	# getting funny results when doing so. There should be a more concise way to do this.
   	stats_by_team.each do |team|
   		compiled_team = 
   		{
@@ -104,15 +121,18 @@ class Stat < ActiveRecord::Base
   			:champ => team[:compiled_stats][:champ],
   			:league_champ => team[:compiled_stats][:league_champ],
   			:div_champ => team[:compiled_stats][:div_champ],
-  			:wildcard => team[:compiled_stats][:wildcard]
+  			:wildcard => team[:compiled_stats][:wildcard],
+  			:notes => team[:compiled_stats][:notes]
   		}
   		compiled_stats.push(compiled_team)
   	end
+  	# Return array of compiled team stats.
   	compiled_stats
   end
   
 private
-  	
+  
+  # Get list of unique team ids from all stats queried.	
 	def self.get_team_ids(stats_pool)
   	team_ids = []
   	stats_pool.each do |stat| 
