@@ -21,6 +21,19 @@ input
 
 table
 {
+	tr
+	{
+		&:hover 
+		{ 
+			background-color: #666; 
+		}
+	}
+	
+	td
+	{
+		padding: 2px 3px;
+	}
+	
 	th
 	{
 		text-align: left;
