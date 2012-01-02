@@ -9,10 +9,11 @@ class StatsController < ApplicationController
 		
 	# Raw stats
 	def raw  	
+		stat = measured_stat()
 		result_count = params[:result_count].to_i
-		
-		@measured_stat = measured_stat
-		@raw_results = Stat.where(:year => params[:start_year]..params[:end_year]).limit(result_count).reorder(measured_stat + ' DESC')
+		if !stat.nil?
+			@raw_results = Stat.where(:year => params[:start_year]..params[:end_year]).limit(result_count).reorder(measured_stat + ' DESC')
+		end
 	end
 	
 	# Compiled stats
