@@ -28,19 +28,27 @@ table
 			background-color: #666; 
 			cursor: default;
 		}
+		
+		&.header
+		{
+			background-color: #666;
+		}
 	}
 	
 	td
 	{
 		padding: 2px 3px;
+		text-align: center;
 	}
 	
 	th
 	{
-		text-align: left;
-		text-decoration: underline;
+		text-align: center;
+		vertical-align: bottom;
 		width: 200px;
-		padding-bottom: 5px;
+		padding: 2px 3px;
+		font-size: 0.8em;
+		font-weight: 700;
 	}
 }
 

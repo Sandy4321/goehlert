@@ -62,6 +62,8 @@ class Stat < ActiveRecord::Base
   		stats_by_team.push(team)
   	end
   	
+  	private
+  	
   	# Push each set of stats for a team id to that team's hash, into its raw stats array.
   	stats_pool.each do |stat|
 			stats_by_team.each do |team_stats|
@@ -98,6 +100,7 @@ class Stat < ActiveRecord::Base
   			compiled[:league_champ] += raw.league_champ	
   			compiled[:div_champ] += raw.div_champ	
   			compiled[:wildcard] += raw.wildcard	
+  			compiled[:playoff_app] += raw.playoff_app
   			compiled[:notes] += (" // " + raw.notes) if !raw.notes.nil?
   		end
   		
@@ -120,6 +123,7 @@ class Stat < ActiveRecord::Base
   			:losses => team[:compiled_stats][:losses],
   			:champ => team[:compiled_stats][:champ],
   			:league_champ => team[:compiled_stats][:league_champ],
+  			:playoff_app => team[:compiled_stats][:playoff_app],
   			:div_champ => team[:compiled_stats][:div_champ],
   			:wildcard => team[:compiled_stats][:wildcard],
   			:notes => team[:compiled_stats][:notes]
@@ -129,8 +133,6 @@ class Stat < ActiveRecord::Base
   	# Return array of compiled team stats.
   	compiled_stats
   end
-  
-private
   
   # Get list of unique team ids from all stats queried.	
 	def self.get_team_ids(stats_pool)

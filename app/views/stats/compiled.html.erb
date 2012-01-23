@@ -31,15 +31,16 @@
 	<% if response_success? %>
 		<% if result_count? %>
 			<table>
-				<tr>
+				<tr class="header">
 					<th>Team</th>
-					<th>Goehlert Score</th>
-					<th>Record</th>
+					<th>Goehlert<br/>Score</th>
+					<th>Win %</th>
 					<th>Wins</th>
 					<th>Losses</th>
 					<th>Champ</th>
-					<th>Lge Champ</th>
-					<th>Div Champ</th>
+					<th>League<br/>Champ</th>
+					<th>Playoff<br/>App</th>
+					<th>Div<br/>Champ</th>
 					<th>WC</th>
 				</tr>
 				<% @compiled_results.each do |result| %>
@@ -54,6 +55,7 @@
 						<td><%= result[:losses] %></td>
 						<td><%= result[:champ] %></td>
 						<td><%= result[:league_champ] %></td>
+						<td><%= result[:playoff_app] %></td>
 						<td><%= result[:div_champ] %></td>
 						<td><%= result[:wildcard] %></td>
 					</tr>
