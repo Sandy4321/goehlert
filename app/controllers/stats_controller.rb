@@ -18,12 +18,14 @@ class StatsController < ApplicationController
 	
 	# Compiled stats
 	def compiled
-		stat = measured_stat()
+		measured_stat = measured_stat()
 		result_count = params[:result_count].to_i
 		
-		if !stat.nil?
-			stat_symbol = stat.to_sym
-			@compiled_results = Stat.compiled_stats(stat, params).sort_by { |team| team[stat_symbol] }.reverse!.first(result_count)
+		if !measured_stat.nil?
+			stat = Stat.new
+			stat_symbol = measured_stat.to_sym
+			@compiled_results = stat.compiled_stats(stat, params).sort_by { |team| team[stat_symbol] }.reverse!.first(result_count)
+			@date_range = stat.date_range(params)
 		end
 	end
 end

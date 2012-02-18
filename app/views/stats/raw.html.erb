@@ -52,8 +52,8 @@
 							(<%= Team.find(result.team_id).abbr %>)
 						</td>
 						<td><%= result.year %></td>
-						<td><%= result.g_score %></td>
-						<td><%= result.reg_season_rec %></td>
+						<td><%= format_decimal(result.g_score, 2) %></td>
+						<td><%= format_decimal(result.reg_season_rec, 3, false) %></td>
 						<td><%= result.wins %></td>
 						<td><%= result.losses %></td>
 						<td><%= result.champ %></td>
@@ -74,19 +74,4 @@
 </div>
 
 <div id="debug">
-	measured_stat
-	<%= debug @measured_stat %>
-	<br/>
-	request.path_parameters
-	<%= debug request.path_parameters %>
-	<br/>
-	request.query_parameters
-	<%= debug request.query_parameters %>
-	<br/>
-	request.request_parameters
-	<%= debug request.request_parameters %>
-	<br/>
-	response.code
-	<%= debug response.code %>
-	<br/>
 </div>

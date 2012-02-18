@@ -8,6 +8,7 @@
 			select_tag(:measured_stat, options_for_select(
 			[
 				['Goehlert Score', 'g_score'], 
+				['Average Goehlert Score', 'avg_g_score'],
 				['Regular Season Record', 'reg_season_rec'],
 				['Wins', 'wins'],
 				['Losses', 'losses'],
@@ -34,6 +35,7 @@
 				<tr class="header">
 					<th>Team</th>
 					<th>Goehlert<br/>Score</th>
+					<th>Avg<br/>Goehlert<br/>Score</th>
 					<th>Win %</th>
 					<th>Wins</th>
 					<th>Losses</th>
@@ -49,8 +51,9 @@
 							<%= cap_first(result[:name]) %>
 							(<%= result[:abbr] %>)
 						</td>
-						<td><%= result[:g_score] %></td>
-						<td><%= result[:reg_season_rec] %></td>
+						<td><%= format_decimal(result[:g_score], 2) %></td>
+						<td><%= average_goehlert_score(result[:g_score]) %></td>
+						<td><%= format_decimal(result[:reg_season_rec], 3, false) %></td>
 						<td><%= result[:wins] %></td>
 						<td><%= result[:losses] %></td>
 						<td><%= result[:champ] %></td>
@@ -70,11 +73,5 @@
 </div>
 
 <div id="debug">
-	request.query_parameters
-	<%= debug request.query_parameters %>
-	<br/>
-	@compiled_results
-	<br/>
-	<%= debug @compiled_results.class %>
-	<%= debug @compiled_results %>
+	<%= @date_range.count %>
 </div>
