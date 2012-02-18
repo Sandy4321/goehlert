@@ -14,9 +14,4 @@ module StatsHelper
 		end
 		str
 	end
-	
-	def average_goehlert_score(g_score)
-		score = g_score/@date_range.count
-		format_decimal(score, 2)
-	end
 end

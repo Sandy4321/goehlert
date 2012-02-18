@@ -45,8 +45,7 @@ class Stat < ActiveRecord::Base
 		compiled_stats = []
 		stats_by_team = []
 	
-		date_range = params[:start_year]..params[:end_year]
-		stats_pool = Stat.where(:year => date_range).to_a
+		stats_pool = Stat.where(:year => date_range(params)).to_a
 		team_ids = get_team_ids(stats_pool)
 		
 		# Create a hash for each team, push to stats_by_team array.
@@ -120,6 +119,7 @@ class Stat < ActiveRecord::Base
 				:name => team[:name],
 				:abbr => team[:abbr],
 				:g_score => team[:compiled_stats][:g_score],
+				:avg_g_score => team[:compiled_stats][:g_score]/date_range(params).count,
 				:reg_season_rec => team[:compiled_stats][:reg_season_rec],
 				:wins => team[:compiled_stats][:wins],
 				:losses => team[:compiled_stats][:losses],
