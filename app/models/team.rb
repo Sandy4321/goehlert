@@ -1,6 +1,6 @@
 class Team < ActiveRecord::Base
-  validates :sport, :presence => true
   validates :league, :presence => true
+  validates :conference, :presence => true
   validates :division, :presence => true
   validates :name, :presence => true,
                    :uniqueness => { :case_sensitive => false }

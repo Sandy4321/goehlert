@@ -31,7 +31,7 @@ class Stat < ActiveRecord::Base
 					   :allow_blank => true
 	validates :location, :format => { :with => /[a-zA-Z]/ },
 						   :allow_blank => true
-	validates :league, :format => { :with => /[a-zA-Z]/ },
+	validates :conference, :format => { :with => /[a-zA-Z]/ },
 						 :allow_blank => true
 	validates :division, :format => { :with => /[a-zA-Z]/ },
 						   :allow_blank => true
@@ -57,8 +57,8 @@ class Stat < ActiveRecord::Base
 				:location => Team.find(id).location,
 				:name => Team.find(id).name,
 		  		:abbr => Team.find(id).abbr,
-		  		:sport => Team.find(id).sport,
 		  		:league => Team.find(id).league,
+		  		:conference => Team.find(id).conference,
 		  		:division => Team.find(id).division,
 		  		:raw_stats => [],
 				:compiled_stats => {}
