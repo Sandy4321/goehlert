@@ -1,9 +1,22 @@
-// Place all the styles related to the Stats controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+@import 'global';
+
 .results
 {
 	margin-top: 30px;
+}
+
+h1
+{
+	a
+	{
+		&.stat-select
+		{
+			color: #656565;
+			@include transition;
+			
+			&:hover { color: #3da7dd; }
+		}
+	}
 }
 
 h3
@@ -39,16 +52,18 @@ table
 	{
 		padding: 2px 3px;
 		text-align: center;
+		font-size: 0.9em
 	}
 	
 	th
 	{
 		text-align: center;
-		vertical-align: bottom;
+		vertical-align: middle;
 		width: 200px;
 		padding: 2px 3px;
-		font-size: 0.8em;
+		font-size: 0.7em;
 		font-weight: 700;
+		text-transform: uppercase;
 	}
 }
 

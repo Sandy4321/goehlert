@@ -11,13 +11,3 @@ class Team < ActiveRecord::Base
   
   has_many :stats, :order => 'year DESC'
 end
-
-######################
-# TEAM COLUMNS NEEDED
-# sport
-# name x
-# abbr x
-# location x
-# league
-# division
-# stats (foreign key)

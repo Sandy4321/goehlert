@@ -1,4 +1,4 @@
-<h1>Stats: Raw</h1>
+<h1>Stats: <%= link_to "Compiled", stats_path, { :class => "stat-select" } %> Raw</h1>
 <div class="query">
 	<%= form_tag('/stats/raw', :method => 'get') do %>
 		<p>
@@ -8,7 +8,7 @@
 			select_tag(:measured_stat, options_for_select(
 			[
 				['Goehlert Score', 'g_score'], 
-				['Regular Season Record', 'reg_season_rec'],
+				['Regular Season Win %', 'reg_season_rec'],
 				['Wins', 'wins'],
 				['Losses', 'losses'],
 				['Championships', 'champ'],
@@ -33,16 +33,17 @@
 			<table>
 				<tr class="header">
 					<th>Team</th>
+					<th>League</th>
 					<th>Year</th>
 					<th>Goehlert<br/>Score</th>
-					<th>Win %</th>
+					<th>Reg<br/>Season<br/>Win %</th>
 					<th>Wins</th>
 					<th>Losses</th>
 					<th>Champ</th>
 					<th>League<br/>Champ</th>
 					<th>Playoff<br/>App</th>
 					<th>Div<br/>Champ</th>
-					<th>WC</th>
+					<th>Wildcard</th>
 				</tr>
 				<tr>
 					<% @raw_results.each do |result| %>
@@ -51,6 +52,7 @@
 							<%= cap_first(Team.find(result.team_id).name) %>
 							(<%= Team.find(result.team_id).abbr %>)
 						</td>
+						<td><%= Team.find(result.team_id).league.upcase! %></td>
 						<td><%= result.year %></td>
 						<td><%= format_decimal(result.g_score, 2) %></td>
 						<td><%= format_decimal(result.reg_season_rec, 3, false) %></td>

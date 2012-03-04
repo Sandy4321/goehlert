@@ -118,6 +118,7 @@ class Stat < ActiveRecord::Base
 			{
 				:name => team[:name],
 				:abbr => team[:abbr],
+				:league => team[:league],
 				:g_score => team[:compiled_stats][:g_score],
 				:avg_g_score => team[:compiled_stats][:g_score]/date_range(params).count,
 				:reg_season_rec => team[:compiled_stats][:reg_season_rec],
