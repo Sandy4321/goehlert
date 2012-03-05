@@ -1,0 +1,42 @@
+<h1>Team: <%= cap_first(@team.location) %> <%= cap_first(@team.name) %></h1>
+<% if @team_stats.any? %>
+	<table>
+		<tr class="header">
+			<th>Year</th>
+			<th>Goehlert<br/>Score</th>
+			<th>Reg<br/>Season<br/>Win %</th>
+			<th>Wins</th>
+			<th>Losses</th>
+			<th>Champ</th>
+			<th>League<br/>Champ</th>
+			<th>Div<br/>Champ</th>
+			<th>Wildcard</th>
+			<th>Location<br/>(if different)</th>
+			<th>Name<br/>(if different)</th>
+			<th>Conference<br/>(if different)</th>
+			<th>Division<br/>(if different)</th>
+		</tr>
+		<% @team_stats.each do |stat| %>
+			<tr>
+				<td><%= stat.year %></td>
+				<td><%= format_decimal(stat.g_score, 2) %></td>
+				<td><%= format_decimal(stat.reg_season_rec, 3, false) %></td>
+				<td><%= stat.wins %></td>
+				<td><%= stat.losses %></td>
+				<td><%= stat.champ %></td>
+				<td><%= stat.league_champ %></td>
+				<td><%= stat.div_champ %></td>
+				<td><%= stat.wildcard %></td>
+				<td><% if stat.location != @team.location %><%= cap_first(stat.location) %><% end %></td>
+				<td><% if stat.name != @team.name %><%= cap_first(stat.name) %><% end %></td>
+				<td><% if stat.conference != @team.conference %><%= cap_first(stat.conference) %><% end %></td>
+				<td><% if stat.division != @team.division %><%= cap_first(stat.division) %><% end %></td>
+			</tr>
+		<% end %>
+	</table>	
+<% else %>
+	<p>No stats available for the <%= cap_first(@team.name) %></p>
+<% end %>
+
+<div id="debug">
+</div>

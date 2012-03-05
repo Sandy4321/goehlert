@@ -1,6 +1,12 @@
 module ApplicationHelper  
-  def cap_first str
+  def cap_first(str)
+  	conjunctions = ['or', 'of', 'and']
     words = str.split(' ')
-    words.each { |word| word.to_s.capitalize! }.join(' ')
+    words.each do |word|
+    	if !conjunctions.include?(word) 
+    		word.to_s.capitalize! 
+    	end
+    end
+    words.join(' ')
   end
 end

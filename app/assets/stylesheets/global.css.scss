@@ -37,3 +37,86 @@ body
 	font-family: $georgia-stack;
 	padding: 30px;
 }
+
+h1
+{
+	a
+	{
+		&.stat-select
+		{
+			color: #656565;
+			@include transition;
+			
+			&:hover { color: #3da7dd; }
+		}
+	}
+}
+
+h3
+{
+	margin-bottom: 8px;
+}
+
+input
+{
+	&.short
+	{
+		width: 30px;
+	}
+}
+
+table
+{
+	tr
+	{
+		&:hover 
+		{ 
+			background-color: #666; 
+			cursor: default;
+		}
+		
+		&.header
+		{
+			background-color: #666;
+		}
+	}
+	
+	td
+	{
+		padding: 2px 3px;
+		text-align: center;
+		font-size: 0.9em
+	}
+	
+	th
+	{
+		text-align: center;
+		vertical-align: middle;
+		width: 200px;
+		padding: 2px 3px;
+		font-size: 0.7em;
+		font-weight: 700;
+		text-transform: uppercase;
+	}
+}
+
+.query
+{
+	margin: 10px 0;
+}
+
+.results
+{
+	margin-top: 30px;
+}
+
+li
+{
+	list-style: none;
+}
+
+#debug
+{
+	//display: none;
+	margin-top: 50px;
+}

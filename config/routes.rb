@@ -1,7 +1,8 @@
 GoehlertSports::Application.routes.draw do
   match '/teams', 		:to => 'teams#index'
+  match '/teams/:id', 	:to => 'teams#show'
   match '/stats', 		:to => 'stats#compiled'
-  match '/stats/raw', :to => 'stats#raw'
+  match '/stats/raw', 	:to => 'stats#raw'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -52,7 +53,7 @@ GoehlertSports::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'home#index'
+  root :to => 'stats#compiled'
 
   # See how all your routes lay out with "rake routes"
 

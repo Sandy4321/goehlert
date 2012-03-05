@@ -49,7 +49,7 @@
 					<% @raw_results.each do |result| %>
 					<tr>
 						<td>
-							<%= cap_first(Team.find(result.team_id).name) %>
+							<%= cap_first(Team.find(result.team_id).name) %> 
 							(<%= Team.find(result.team_id).abbr %>)
 						</td>
 						<td><%= Team.find(result.team_id).league.upcase! %></td>
