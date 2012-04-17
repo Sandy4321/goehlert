@@ -38,6 +38,14 @@ body
 	padding: 30px;
 }
 
+a
+{
+	color: #bcbcbc;
+	@include transition;
+	
+	&:hover { color: #3da7dd; }
+}
+
 h1
 {
 	a
@@ -45,7 +53,6 @@ h1
 		&.stat-select
 		{
 			color: #656565;
-			@include transition;
 			
 			&:hover { color: #3da7dd; }
 		}

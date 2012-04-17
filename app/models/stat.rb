@@ -116,6 +116,7 @@ class Stat < ActiveRecord::Base
 		stats_by_team.each do |team|
 			compiled_team = 
 			{
+				:id => team[:id],
 				:name => team[:name],
 				:abbr => team[:abbr],
 				:league => team[:league],

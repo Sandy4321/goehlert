@@ -48,7 +48,7 @@
 				</tr>
 				<% @compiled_results.each do |result| %>
 					<tr>
-						<td><%= cap_first(result[:name]) %>(<%= result[:abbr] %>)</td>
+						<td><%= link_to cap_first(result[:name]), '/teams/' + result[:id].to_s %></td>
 						<td><%= result[:league].upcase! %></td>
 						<td><%= format_decimal(result[:g_score], 2) %></td>
 						<td><%= format_decimal(result[:avg_g_score], 3) %></td>
