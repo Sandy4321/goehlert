@@ -8,6 +8,14 @@ class Team < ActiveRecord::Base
                    :uniqueness => { :case_sensitive => false }
   validates :location, :presence => true,
   										 :format => { :with => /[a-zA-Z]/ }
-  
+
   has_many :stats, :order => 'year DESC'
+
+  def self.ordered
+    order('location ASC', 'name ASC')
+  end
+
+  def to_s
+    "#{location.titleize} #{name.titleize}"
+  end
 end
