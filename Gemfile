@@ -7,6 +7,7 @@ gem 'rails', '3.2.14'
 gem 'pg'
 
 gem 'jquery-rails'
+gem 'activeadmin'
 
 group :assets do
   gem 'sass-rails'
