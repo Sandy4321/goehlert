@@ -2,7 +2,7 @@ ActiveAdmin.register Stat do
   form do |f|
     f.inputs do
       f.input :team, collection: Team.ordered, member_label: :to_s
-      f.input :year
+      f.input :year, as: :select, collection: (1871..(Time.now.year)).to_a.reverse
       f.input :location
       f.input :name
       f.input :conference
