@@ -47,12 +47,12 @@ ActiveRecord::Schema.define(:version => 20131006183653) do
   add_index "admin_users", ["reset_password_token"], :name => "index_admin_users_on_reset_password_token", :unique => true
 
   create_table "stats", :force => true do |t|
-    t.date     "year"
-    t.decimal  "g_score"
-    t.decimal  "reg_season_rec"
+    t.integer  "year"
+    t.decimal  "g_score",        :precision => 10, :scale => 2
+    t.decimal  "reg_season_rec", :precision => 10, :scale => 3
     t.integer  "team_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "wins"
     t.integer  "losses"
     t.integer  "wildcard"
