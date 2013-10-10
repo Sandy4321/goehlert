@@ -1,1 +1,13 @@
 @import 'global';
+
+body.stats {
+  td {
+    a {
+      color: #bcbcbc;
+      text-decoration: none;
+      @include transition;
+
+      &:hover { color: #3da7dd; }
+    }
+  }
+}

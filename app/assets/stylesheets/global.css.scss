@@ -1,21 +1,18 @@
-/* ================================================== */
-/* Global
-/* ================================================== */
-@mixin rounded($radius: 5px) 
+@mixin rounded($radius: 5px)
 {
 	-moz-border-radius: $radius;
 	-webkit-border-radius: $radius;
 	border-radius: $radius;
 }
 
-@mixin shadow($horizontal: 0, $vertical: 0, $blur: 5px, $color: rgba(0,0,0,0.5)) 
+@mixin shadow($horizontal: 0, $vertical: 0, $blur: 5px, $color: rgba(0,0,0,0.5))
 {
 	-moz-box-shadow: $horizontal $vertical $blur $color;
 	-webkit-box-shadow: $horizontal $vertical $blur $color;
 	box-shadow: $horizontal $vertical $blur $color;
 }
 
-@mixin transition($property: all, $speed: 0.2s, $motion: linear) 
+@mixin transition($property: all, $speed: 0.2s, $motion: linear)
 {
 	-moz-transition: $property $speed $motion;
 	-o-transition: $property $speed $motion;
@@ -25,7 +22,7 @@
 }
 
 $georgia-stack: Georgia, Palatino, "Palatino Linotype", Times, "Times New Roman", serif;
-$franklin-stack: "Franklin Gothic Medium", "Arial Narrow Bold", Arial, sans-serif; 
+$franklin-stack: "Franklin Gothic Medium", "Arial Narrow Bold", Arial, sans-serif;
 
 .error { color: #D81028; }
 
@@ -42,7 +39,7 @@ a
 {
 	color: #bcbcbc;
 	@include transition;
-	
+
 	&:hover { color: #3da7dd; }
 }
 
@@ -53,7 +50,7 @@ h1
 		&.stat-select
 		{
 			color: #656565;
-			
+
 			&:hover { color: #3da7dd; }
 		}
 	}
@@ -64,11 +61,12 @@ h3
 	margin-bottom: 8px;
 }
 
-input
+input[type=text]
 {
 	&.short
 	{
 		width: 30px;
+    padding: 5px;
 	}
 }
 
@@ -76,25 +74,25 @@ table
 {
 	tr
 	{
-		&:hover 
-		{ 
-			background-color: #666; 
+		&:hover
+		{
+			background-color: #666;
 			cursor: default;
 		}
-		
+
 		&.header
 		{
 			background-color: #666;
 		}
 	}
-	
+
 	td
 	{
 		padding: 2px 3px;
 		text-align: center;
 		font-size: 0.9em
 	}
-	
+
 	th
 	{
 		text-align: center;
@@ -120,10 +118,4 @@ table
 li
 {
 	list-style: none;
-}
-
-#debug
-{
-	//display: none;
-	margin-top: 50px;
 }
