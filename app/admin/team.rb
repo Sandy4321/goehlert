@@ -8,5 +8,7 @@ ActiveAdmin.register Team do
       f.input :conference
       f.input :division
     end
+
+    f.actions
   end
 end
