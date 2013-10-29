@@ -2,12 +2,12 @@
 <div class="query">
 	<%= form_tag('/stats/raw', :method => 'get') do %>
 		<p>
-			Display the top <%= text_field_tag :result_count, params[:result_count], :class => "short" %> teams 
-			based on 
-			<%= 
+			Display the top <%= text_field_tag :result_count, params[:result_count], :class => "short" %> teams
+			based on
+			<%=
 			select_tag(:measured_stat, options_for_select(
 			[
-				['Goehlert Score', 'g_score'], 
+				['Goehlert Score', 'g_score'],
 				['Regular Season Win %', 'reg_season_rec'],
 				['Wins', 'wins'],
 				['Losses', 'losses'],
@@ -15,10 +15,10 @@
 				['League Championships', 'league_champ'],
 				['Division Championships', 'div_champ'],
 				['Wildcard', 'wildcard']
-			], params[:measured_stat])) 
-			%> 
-			for years <%= select_tag(:start_year, options_for_select((1871..2011).reverse_each, params[:start_year].to_s)) %>
-			through <%= select_tag(:end_year, options_for_select((1871..2011).reverse_each, params[:end_year].to_s)) %>
+			], params[:measured_stat]))
+			%>
+			for years <%= select_tag(:start_year, options_for_select((Stat.years).reverse_each, params[:start_year].to_s)) %>
+			through <%= select_tag(:end_year, options_for_select((Stat.years).reverse_each, params[:end_year].to_s)) %>
 		</p>
 		<div class="actions">
 			<%= submit_tag "Submit" %>

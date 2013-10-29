@@ -1,76 +1,81 @@
 class Stat < ActiveRecord::Base
-	validates :year, 
-	  :presence => true 
-	validates :team_id, 
+	validates :year,
+	  :presence => true
+	validates :team_id,
 	  :presence => true,
-	  :uniqueness => { 
+	  :uniqueness => {
 	    :scope => :year,
-	    :message => 'can only have one set of stats per year' 
+	    :message => 'can only have one set of stats per year'
 	  }
-	validates :wins, 
+	validates :wins,
 	  :presence => true,
 	  :numericality => { :only_integer => true }
-	validates :losses, 
+	validates :losses,
 	  :presence => true,
 	  :numericality => { :only_integer => true }
-	validates :reg_season_rec, 
+	validates :reg_season_rec,
 	  :presence => true,
-		:numericality => { 
+		:numericality => {
 		  :greater_than_or_equal_to => 0,
-			:less_than_or_equal_to => 1 
+			:less_than_or_equal_to => 1
 		}
-	validates :wildcard, 
+	validates :wildcard,
 	  :presence => true,
 		:numericality => { :only_integer => true },
 		:inclusion => { :in => [0, 1] }
-	validates :playoff_app, 
+	validates :playoff_app,
 	  :presence => true,
 	  :numericality => { :only_integer => true },
 	  :inclusion => { :in => [0, 1] }
-	validates :div_champ, 
+	validates :div_champ,
 	  :presence => true,
 		:numericality => { :only_integer => true },
 		:inclusion => { :in => [0, 1] }
-	validates :league_champ, 
+	validates :league_champ,
 	  :presence => true,
     :numericality => { :only_integer => true },
     :inclusion => { :in => [0, 1] }
-	validates :champ, 
+	validates :champ,
 	  :presence => true,
 		:numericality => { :only_integer => true },
 		:inclusion => { :in => [0, 1] }
-	validates :g_score, 
+	validates :g_score,
 	  :presence => true,
 		:numericality => true
-	validates :name, 
+	validates :name,
 	  :format => { :with => /[a-zA-Z]/ },
 		:allow_blank => true
-	validates :location, 
+	validates :location,
 	  :format => { :with => /[a-zA-Z]/ },
 		:allow_blank => true
-	validates :conference, 
+	validates :conference,
 	  :format => { :with => /[a-zA-Z]/ },
 		:allow_blank => true
-	validates :division, 
+	validates :division,
 	  :format => { :with => /[a-zA-Z]/ },
 		:allow_blank => true
-		
+
 	belongs_to :team
-	
+
+
+  def self.years
+    pluck(:year).uniq.sort
+  end
+
 	def date_range(params)
 		params[:start_year]..params[:end_year]
 	end
-  
+
 	def compiled_stats(measured_stat, params)
 		compiled_stats = []
 		stats_by_team = []
-	
+
 		stats_pool = Stat.where(:year => date_range(params)).to_a
 		team_ids = get_team_ids(stats_pool)
-		
+
 		# Create a hash for each team, push to stats_by_team array.
 		team_ids.each do |id|
-			team = 
+			team =
 			{
 				:id => id,
 				:location => Team.find(id).location,
@@ -84,7 +89,7 @@ class Stat < ActiveRecord::Base
 			}
 			stats_by_team.push(team)
 		end
-				
+
 		# Push each set of stats for a team id to that team's hash, into its raw stats array.
 		stats_pool.each do |stat|
 			stats_by_team.each do |team_stats|
@@ -93,10 +98,10 @@ class Stat < ActiveRecord::Base
 				end
 			end
 		end
-		
+
 		# Create compiled stats hash for each team.
 		stats_by_team.each do |team|
-			team[:compiled_stats] = 
+			team[:compiled_stats] =
 			{
 				:g_score => 0,
 				:reg_season_rec => 0,
@@ -109,32 +114,32 @@ class Stat < ActiveRecord::Base
 				:playoff_app => 0,
 				:notes => ''
 			}
-			
+
 			# Add up the raw stats for each team into that team's compiled stats hash.
 			compiled = team[:compiled_stats]
-			
+
 			team[:raw_stats].each do |raw|
 				compiled[:g_score] += raw.g_score
-				compiled[:wins] += raw.wins	
-				compiled[:losses] += raw.losses	
-				compiled[:champ] += raw.champ	
-				compiled[:league_champ] += raw.league_champ	
-				compiled[:div_champ] += raw.div_champ	
-				compiled[:wildcard] += raw.wildcard	
+				compiled[:wins] += raw.wins
+				compiled[:losses] += raw.losses
+				compiled[:champ] += raw.champ
+				compiled[:league_champ] += raw.league_champ
+				compiled[:div_champ] += raw.div_champ
+				compiled[:wildcard] += raw.wildcard
 				compiled[:playoff_app] += raw.playoff_app
 				compiled[:notes] += (" // " + raw.notes) if !raw.notes.nil?
 			end
-			
+
 			# Calculate overall season record based on compiled wins and losses.
 			total_games = compiled[:wins].to_f + compiled[:losses].to_f
 			compiled[:reg_season_rec] = (compiled[:wins].to_f / total_games).round(3)
 		end
-		
+
 		# Create a new compiled team hash with compiled stats and add each compiled team to the results array.
 		# This feels redundant; initially I tried to just remove the raw stats from each team but was
 		# getting funny results when doing so. There should be a more concise way to do this.
 		stats_by_team.each do |team|
-			compiled_team = 
+			compiled_team =
 			{
 				:id => team[:id],
 				:name => team[:name],
@@ -157,11 +162,11 @@ class Stat < ActiveRecord::Base
 		# Return array of compiled team stats.
 		compiled_stats
 	end
-  
-  # Get list of unique team ids from all stats queried.	
+
+  # Get list of unique team ids from all stats queried.
 	def get_team_ids(stats_pool)
 	  	team_ids = []
-	  	stats_pool.each do |stat| 
+	  	stats_pool.each do |stat|
 	  		if !team_ids.include?(stat.team_id)
 	  			team_ids.push(stat.team_id)
 	  		end
