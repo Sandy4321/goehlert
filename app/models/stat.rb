@@ -1,76 +1,49 @@
 class Stat < ActiveRecord::Base
-	validates :year,
-	  :presence => true
-	validates :team_id,
-	  :presence => true,
-	  :uniqueness => {
-	    :scope => :year,
-	    :message => 'can only have one set of stats per year'
-	  }
-	validates :wins,
-	  :presence => true,
-	  :numericality => { :only_integer => true }
-	validates :losses,
-	  :presence => true,
-	  :numericality => { :only_integer => true }
-	validates :reg_season_rec,
-	  :presence => true,
-		:numericality => {
-		  :greater_than_or_equal_to => 0,
-			:less_than_or_equal_to => 1
-		}
-	validates :wildcard,
-	  :presence => true,
-		:numericality => { :only_integer => true },
-		:inclusion => { :in => [0, 1] }
-	validates :playoff_app,
-	  :presence => true,
-	  :numericality => { :only_integer => true },
-	  :inclusion => { :in => [0, 1] }
-	validates :div_champ,
-	  :presence => true,
-		:numericality => { :only_integer => true },
-		:inclusion => { :in => [0, 1] }
-	validates :league_champ,
-	  :presence => true,
-    :numericality => { :only_integer => true },
-    :inclusion => { :in => [0, 1] }
-	validates :champ,
-	  :presence => true,
-		:numericality => { :only_integer => true },
-		:inclusion => { :in => [0, 1] }
-	validates :g_score,
-	  :presence => true,
-		:numericality => true
-	validates :name,
-	  :format => { :with => /[a-zA-Z]/ },
-		:allow_blank => true
-	validates :location,
-	  :format => { :with => /[a-zA-Z]/ },
-		:allow_blank => true
-	validates :conference,
-	  :format => { :with => /[a-zA-Z]/ },
-		:allow_blank => true
-	validates :division,
-	  :format => { :with => /[a-zA-Z]/ },
-		:allow_blank => true
+	validates :year, :presence => true
+	validates :team_id, :presence => true, :uniqueness => { :scope => :year, :message => 'can only have one set of stats per year' }
+	validates :wins, :presence => true, :numericality => { :only_integer => true }
+	validates :losses, :presence => true, :numericality => { :only_integer => true }
+	validates :reg_season_rec, :presence => true, :numericality => { :greater_than_or_equal_to => 0, :less_than_or_equal_to => 1 }
+	validates :wildcard, :presence => true, :numericality => { :only_integer => true }, :inclusion => { :in => [0, 1] }
+	validates :playoff_app, :presence => true, :numericality => { :only_integer => true }, :inclusion => { :in => [0, 1] }
+	validates :div_champ, :presence => true, :numericality => { :only_integer => true }, :inclusion => { :in => [0, 1] }
+	validates :league_champ, :presence => true, :numericality => { :only_integer => true }, :inclusion => { :in => [0, 1] }
+	validates :champ, :presence => true, :numericality => { :only_integer => true }, :inclusion => { :in => [0, 1] }
+	validates :g_score, :presence => true, :numericality => true
+	validates :name, :format => { :with => /[a-zA-Z]/ }, :allow_blank => true
+	validates :location, :format => { :with => /[a-zA-Z]/ }, :allow_blank => true
+	validates :conference, :format => { :with => /[a-zA-Z]/ }, :allow_blank => true
+	validates :division, :format => { :with => /[a-zA-Z]/ }, :allow_blank => true
 
 	belongs_to :team
-
 
   def self.years
     pluck(:year).uniq.sort
   end
 
-	def date_range(params)
-		params[:start_year]..params[:end_year]
+	def date_range(options)
+		options[:start_year]..options[:end_year]
 	end
 
-	def compiled_stats(measured_stat, params)
+  def selected_league_team_ids(options)
+    selected_team_ids = []
+
+    selected_leagues = options[:league].select { |k, v| v == '1' }.map{ |k, v| k }
+
+    Team.all.each do |team|
+      if selected_leagues.include?(team.league)
+        selected_team_ids << team.id
+      end
+    end
+
+    selected_team_ids
+  end
+
+	def compiled_stats(measured_stat, options)
 		compiled_stats = []
 		stats_by_team = []
 
-		stats_pool = Stat.where(:year => date_range(params)).to_a
+		stats_pool = Stat.where(:year => date_range(options), :team_id => selected_league_team_ids(options)).to_a
 		team_ids = get_team_ids(stats_pool)
 
 		# Create a hash for each team, push to stats_by_team array.
@@ -146,7 +119,7 @@ class Stat < ActiveRecord::Base
 				:abbr => team[:abbr],
 				:league => team[:league],
 				:g_score => team[:compiled_stats][:g_score],
-				:avg_g_score => team[:compiled_stats][:g_score]/date_range(params).count,
+				:avg_g_score => team[:compiled_stats][:g_score]/date_range(options).count,
 				:reg_season_rec => team[:compiled_stats][:reg_season_rec],
 				:wins => team[:compiled_stats][:wins],
 				:losses => team[:compiled_stats][:losses],
@@ -174,23 +147,3 @@ class Stat < ActiveRecord::Base
 	  	team_ids
 	end
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

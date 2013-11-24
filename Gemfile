@@ -6,7 +6,6 @@ gem 'rails', '3.2.14'
 
 gem 'pg'
 
-
 gem 'jquery-rails'
 gem 'activeadmin'
 gem 'sass-rails'
@@ -30,6 +29,7 @@ group :test do
   gem 'capybara'
   gem 'capybara-screenshot'
   gem 'poltergeist'
+  gem 'launchy'
   gem 'connection_pool'
   gem 'database_cleaner'
   gem 'factory_girl_rails'

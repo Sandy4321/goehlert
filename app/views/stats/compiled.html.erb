@@ -21,6 +21,17 @@
 			for years <%= select_tag(:start_year, options_for_select((Stat.years).reverse_each, params[:start_year].to_s)) %>
 			through <%= select_tag(:end_year, options_for_select((Stat.years).reverse_each, params[:end_year].to_s)) %>
 		</p>
+    <div class="league-filter">
+      <h3>Leagues:</h3>
+      <ul>
+        <% Team.leagues.each do |league_name| %>
+          <li>
+            <%= check_box :league, league_name, checked: true %>
+            <%= label :league, league_name, league_name.upcase %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
 		<div class="actions">
 			<%= submit_tag "Submit" %>
 		</div>
