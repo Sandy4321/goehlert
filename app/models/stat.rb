@@ -3,6 +3,8 @@ class Stat < ActiveRecord::Base
 	validates :team_id, :presence => true, :uniqueness => { :scope => :year, :message => 'can only have one set of stats per year' }
 	validates :wins, :presence => true, :numericality => { :only_integer => true }
 	validates :losses, :presence => true, :numericality => { :only_integer => true }
+	validates :ties, :presence => true, :numericality => { :only_integer => true }
+	validates :overtime_losses, :presence => true, :numericality => { :only_integer => true }
 	validates :reg_season_rec, :presence => true, :numericality => { :greater_than_or_equal_to => 0, :less_than_or_equal_to => 1 }
 	validates :wildcard, :presence => true, :numericality => { :only_integer => true }, :inclusion => { :in => [0, 1] }
 	validates :playoff_app, :presence => true, :numericality => { :only_integer => true }, :inclusion => { :in => [0, 1] }
@@ -80,6 +82,8 @@ class Stat < ActiveRecord::Base
 				:reg_season_rec => 0,
 				:wins => 0,
 				:losses => 0,
+				:ties => 0,
+				:overtime_losses => 0,
 				:champ => 0,
 				:league_champ => 0,
 				:div_champ => 0,
@@ -95,6 +99,8 @@ class Stat < ActiveRecord::Base
 				compiled[:g_score] += raw.g_score
 				compiled[:wins] += raw.wins
 				compiled[:losses] += raw.losses
+				compiled[:ties] += raw.ties
+				compiled[:overtime_losses] += raw.overtime_losses
 				compiled[:champ] += raw.champ
 				compiled[:league_champ] += raw.league_champ
 				compiled[:div_champ] += raw.div_champ
@@ -123,6 +129,8 @@ class Stat < ActiveRecord::Base
 				:reg_season_rec => team[:compiled_stats][:reg_season_rec],
 				:wins => team[:compiled_stats][:wins],
 				:losses => team[:compiled_stats][:losses],
+				:ties => team[:compiled_stats][:ties],
+				:overtime_losses => team[:compiled_stats][:overtime_losses],
 				:champ => team[:compiled_stats][:champ],
 				:league_champ => team[:compiled_stats][:league_champ],
 				:playoff_app => team[:compiled_stats][:playoff_app],

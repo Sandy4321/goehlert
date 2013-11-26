@@ -7,7 +7,6 @@ class StatsController < ApplicationController
 		end
 	end
 
-	# Raw stats
 	def raw
 		stat = measured_stat()
 		result_count = params[:result_count].to_i
@@ -16,7 +15,6 @@ class StatsController < ApplicationController
 		end
 	end
 
-	# Compiled stats
 	def compiled
 		measured_stat = measured_stat()
 		result_count = params[:result_count].to_i
